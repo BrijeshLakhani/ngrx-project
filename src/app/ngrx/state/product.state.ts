@@ -1,10 +1,10 @@
-import { Product } from './product.model';
+import { Product } from '../../models/product.model';
 
 export interface ProductState {
   products: Product[];
 }
 
-const initialState: ProductState = {
+export const initialState: ProductState = {
   products: [
     {
       _id: '1',
