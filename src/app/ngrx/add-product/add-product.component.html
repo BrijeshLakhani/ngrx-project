@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <div class="card my-4">
+      <div class="container px-3 py-3 bg-secondary-subtle">
+        <div class="clearfix w-100">
+          <button
+            type="button"
+            style="float: right"
+            class="btn-close "
+            aria-label="Close"
+            routerLink="/products"
+          ></button>
+        </div>
+        <form [formGroup]="productForm">
+          <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="productName"
+            />
+            <div
+              class="text-danger"
+              *ngIf="pName && pName.touched && pName.invalid"
+            >
+              <div *ngIf="pName.errors.required">
+                Product Name is must be required
+              </div>
+              <div *ngIf="pName.errors.minLength">
+                Product Name entre must be valid
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Product Price</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="productPrice"
+            />
+            <div
+              class="text-danger"
+              *ngIf="pPrice && pPrice.touched && pPrice.invalid"
+            >
+              <div *ngIf="pPrice.errors.required">
+                Product Price is must be required
+              </div>
+              <div *ngIf="pPrice.errors.minLength">
+                Product Price entre must be valid
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Product Description</label>
+            <textarea
+              type="text"
+              class="form-control"
+              formControlName="productDescription"
+            ></textarea>
+            <div
+              class="text-danger"
+              *ngIf="
+                Pdescription && Pdescription.touched && Pdescription.invalid
+              "
+            >
+              <div *ngIf="Pdescription.errors.required">
+                Product Description is must be required
+              </div>
+              <div *ngIf="Pdescription.errors.minLength">
+                Product Description entre must be valid
+              </div>
+            </div>
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="btn btn-success me-3"
+              (click)="addProduct()"
+            >
+              Submit
+            </button>
+            <button type="button " class="btn btn-danger" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

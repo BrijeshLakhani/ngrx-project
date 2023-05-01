@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './ngrx/add-user/home.component';
-import { UserListComponent } from './ngrx/user-list/user-list.component';
+import { HomeComponent } from './ngrx/home/home.component';
 import { AboutComponent } from './shared/about/about.component';
+import { AddProductComponent } from './ngrx/add-product/add-product.component';
+import { ProductsComponent } from './ngrx/products/products.component';
 
 const routes: Routes = [
   {
@@ -10,8 +11,12 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'user',
-    component: UserListComponent,
+    path: 'products',
+    component: ProductsComponent,
+  },
+  {
+    path: 'product/:id',
+    component: AddProductComponent,
   },
   {
     path: 'about',

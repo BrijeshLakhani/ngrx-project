@@ -1,0 +1,39 @@
+<div class="container-fluid px-5 py-5">
+  <div class="mb-3">
+    <button class="btn btn-outline-dark" [routerLink]="['/product', 'add']" >
+      Add Products
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table
+      class="table table-dark table-striped table-bordered caption-top"
+      *ngIf="productList | async as productData"
+    >
+      <caption>
+        List of products
+      </caption>
+      <thead class="table-light">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Product Price</th>
+          <th scope="col">Product Description</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let item of productData">
+          <td>{{ item._id }}</td>
+          <td>{{ item.productName }}</td>
+          <td>{{ item.productPrice }}</td>
+          <td>{{ item.productDescription }}</td>
+          <td>
+            <button class="btn btn-light me-2" [routerLink]="['/product', item._id]" >Edit</button>
+            <button class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
