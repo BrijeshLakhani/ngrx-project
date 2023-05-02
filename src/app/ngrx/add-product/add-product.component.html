@@ -73,11 +73,20 @@
           </div>
           <div>
             <button
+            *ngIf="!product"
               type="submit"
               class="btn btn-success me-3"
               (click)="addProduct()"
             >
               Submit
+            </button>
+            <button
+            *ngIf="product"
+              type="submit"
+              class="btn btn-success me-3"
+              (click)="updateProduct()"
+            >
+              Update
             </button>
             <button type="button " class="btn btn-danger" (click)="cancel()">
               Cancel

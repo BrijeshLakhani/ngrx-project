@@ -14,6 +14,7 @@ import { appReducer } from './store/app.state';
 import { AddProductComponent } from './ngrx/add-product/add-product.component';
 import { ProductsComponent } from './ngrx/products/products.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { ProductsComponent } from './ngrx/products/products.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    // StoreModule.forRoot({ localStorageRehydrated: localStorageRehydrated }),
     StoreModule.forRoot(appReducer, {}),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production

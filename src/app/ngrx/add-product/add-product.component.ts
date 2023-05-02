@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/app/models/product.model';
 import { AppState } from 'src/app/store/app.state';
-import { addProduct } from '../state/product.action';
+import { addProduct, updateProduct } from '../state/product.action';
+import { getProductById } from '../state/product.selector';
 
 @Component({
   selector: 'app-add-product',
@@ -13,36 +14,43 @@ import { addProduct } from '../state/product.action';
 })
 export class AddProductComponent {
   productForm: FormGroup;
+  product: any;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<AppState>
   ) {
+    this.activatedRoute.paramMap.subscribe((params: any) => {
+      let pID = params.get('id');
+      if (pID != 'add') {
+        console.log('pID: ', pID);
+        this.store.select(getProductById, { pID }).subscribe((data: any) => {
+          console.log(data);
+          this.product = data;
+        });
+      }
+    });
+
     this.productForm = new FormGroup({
-      productName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-      ]),
-      productPrice: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-      ]),
-      productDescription: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
+      productName: new FormControl(
+        this.product?.productName ? this.product?.productName : '',
+        [Validators.required, Validators.minLength(2)]
+      ),
+      productPrice: new FormControl(
+        this.product?.productPrice ? this.product?.productPrice : '',
+        [Validators.required, Validators.minLength(2)]
+      ),
+      productDescription: new FormControl(
+        this.product?.productDescription
+          ? this.product?.productDescription
+          : '',
+        [Validators.required, Validators.minLength(4)]
+      ),
     });
   }
 
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((params: any) => {
-      let pID = params.get('id');
-      if (pID) {
-        console.log('pID: ', pID);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   get pName(): any {
     return this.productForm.get('productName');
@@ -79,6 +87,21 @@ export class AddProductComponent {
     };
 
     this.store.dispatch(addProduct({ product }));
+
+    this.cancel();
+  }
+
+  updateProduct() {
+    const product: Product = {
+      _id: this.product._id,
+      productName: this.productForm.value.productName,
+      productPrice: this.productForm.value.productPrice,
+      productDescription: this.productForm.value.productDescription,
+    };
+
+    this.store.dispatch(updateProduct({ product }));
+
+    this.cancel();
   }
 
   cancel() {
